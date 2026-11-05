@@ -19,11 +19,11 @@ MolStructBench evaluates molecular reasoning through explanations, graph analysi
 | [MolStructBench](https://github.com/ywshi0621/MolStructBench) | Complete questions, gold, and official scoring | OpenCode + scientific_shell |
 | [MolStructBench-Core](https://github.com/ywshi0621/MolStructBench-Core) | The same questions, gold, and official scoring | Integrate an external runner |
 
-## Results by structural domain
+## Five-model results without tools
 
-![Scores by structural domain](assets/leaderboard_domains.svg)
+![Five-model results without tools](assets/leaderboard_domains.svg)
 
-The [reference leaderboard](LEADERBOARD.md) includes the official scores and secondary metrics for all five models.
+The chart reports five-model results without tool access. The [reference leaderboard](LEADERBOARD.md) documents the archived agent-run results separately.
 
 ## Install
 

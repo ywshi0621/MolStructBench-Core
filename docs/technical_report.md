@@ -6,7 +6,7 @@ Technical report   ·   Version 1.0   ·   October 2026
 
 MolStructBench evaluates how language models interpret molecular graphs and three-dimensional structures, use scientific tools, and ground their answers in specific atoms, bonds, and coordinates. The benchmark contains 288 fixed questions across Native3D, 3D→2D, and Pure2D. Its 48 dataset–task units cover structure grounding, conformational geometry, molecular properties, and medicinal chemistry, with six questions in each unit.
 
-The release includes the questions, complete gold answers, an official local scorer, and an optional OpenCode agent harness. Deterministic evaluation handles 180 questions; 108 use a frozen Qwen3.8-Max judge with three independent votes and median aggregation. Five archived model runs are scored by the same procedure. Their MolStructBench Scores range from 87.38 to 98.78 out of 100. All predictions and archived judge votes needed to reproduce these scores are included.
+The release includes the questions, complete gold answers, an official local scorer, and an optional OpenCode agent harness. Deterministic evaluation handles 180 questions; 108 use a frozen Qwen3.8-Max judge with three independent votes and median aggregation. The Core release reports five model results without tool access. Scores range from 51.27% to 62.71%. The published evaluation records retain the associated model outputs and score summaries.
 
 ## 1 Benchmark design
 
@@ -95,41 +95,27 @@ The data selection, evaluator, accepted variants, judge template, and configurat
 
 ## 4 Five model results
 
-Five agent runs were evaluated on the same 288 questions with the official scorer. The results comprise 1,440 predictions and 1,665 completed judge votes: three votes for each of 540 semantic answers, plus 45 votes for 15 molecular-identity fallbacks. Table 1 reports the official scores and domain breakdown.
+Five models were evaluated on the fixed 288-question set without tool access. Table 1 reports the resulting overall scores.
 
-Table 1   Official scores and domain breakdown on a 0 to 100 scale
+Table 1   Five-model results without tools
 
-| Model | Score | Native3D | 3D→2D | Pure2D |
-| --- | --- | --- | --- | --- |
-| GPT-6 Astra | 98.78 | 100.00 | 97.40 | 98.96 |
-| Kimi K3 | 95.66 | 95.83 | 93.23 | 97.92 |
-| DeepSeek V4 Pro 0813 | 93.92 | 91.67 | 91.15 | 98.96 |
-| Qwen3.8-Max | 90.28 | 93.75 | 87.50 | 89.58 |
-| GLM-5.3-Max | 87.38 | 85.42 | 85.42 | 91.32 |
+| Model | Score without tools |
+|---|---:|
+| GPT-6 Astra | 62.71% |
+| Kimi K3 | 58.72% |
+| Qwen3.8-Max | 57.18% |
+| DeepSeek V4 Pro 0813 | 53.41% |
+| GLM-5.3-Max | 51.27% |
 
-GPT-6 Astra has the highest aggregate score at 98.78, followed by Kimi K3 at 95.66 and DeepSeek V4 Pro 0813 at 93.92. Qwen3.8-Max scores 90.28, and GLM-5.3-Max scores 87.38. Astra scores 100 on Native3D; Astra and DeepSeek both reach 98.96 on Pure2D. Domain scores separate these aggregate results: Qwen performs better on Native3D than on either topological domain, while Kimi and DeepSeek obtain their strongest results on Pure2D.
+GPT-6 Astra records 62.71%, followed by Kimi K3 at 58.72% and Qwen3.8-Max at 57.18%. DeepSeek V4 Pro 0813 records 53.41%, and GLM-5.3-Max records 51.27%.
 
-Table 2   Secondary metrics on a 0 to 100 scale
+### Five-model results without tools
 
-| Model | Deterministic | Semantic | Micro |
-| --- | --- | --- | --- |
-| GPT-6 Astra | 100.00 | 96.30 | 98.61 |
-| Kimi K3 | 95.56 | 96.76 | 96.01 |
-| DeepSeek V4 Pro 0813 | 96.94 | 92.13 | 95.14 |
-| Qwen3.8-Max | 91.11 | 87.04 | 89.58 |
-| GLM-5.3-Max | 90.56 | 84.72 | 88.37 |
+Figure 1   Overall results for the five models without tool access, on a percentage scale.
 
-The secondary metrics help locate the source of a difference. DeepSeek scores 96.94 on deterministic tasks and 92.13 on semantic tasks; Kimi scores 95.56 and 96.76, respectively. The headline score also depends on where those results fall across the three equally weighted domains. The released per-question records and 48-unit breakdown allow readers to examine that structure directly.
+![Five-model results without tools](../assets/leaderboard_domains.svg)
 
-### Performance across structural domains
-
-Figure 1   Scores for the five reference models across Native3D, 3D→2D, and Pure2D. Each bar is the mean of the task-unit scores in that domain, on a 0–100 scale.
-
-![Scores across structural domains](../assets/leaderboard_domains.svg)
-
-Performance differs across structural representations. The Native3D scores range from 85.42 to 100, the 3D→2D scores from 85.42 to 97.40, and the Pure2D scores from 89.58 to 98.96. These domain means summarize localization and reasoning tasks with different inputs. The equal-weight aggregation gives each domain the same contribution to the final score.
-
-Astra leads on Native3D and 3D→2D and ties DeepSeek on Pure2D. Kimi exceeds DeepSeek on both Native3D and 3D→2D, while DeepSeek scores higher on Pure2D. Qwen scores higher than GLM on Native3D and 3D→2D; GLM scores higher on Pure2D. The 48-task breakdown resolves these domain differences into specific chemical and structural tasks.
+The figure presents the ranking and score separation for this no-tool setting. Per-domain and secondary metrics are not reported in this figure.
 
 ## 5 What the task breakdown reveals
 
